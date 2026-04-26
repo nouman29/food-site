@@ -14,7 +14,6 @@ const discoverLinks = [
   { to: "/services", label: "Services" },
   { to: "/team", label: "Our Team" },
   { to: "/testimonials", label: "Testimonials" },
-  { to: "/blog", label: "Blog" },
 ];
 
 const socialLinks = [

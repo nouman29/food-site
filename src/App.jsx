@@ -9,7 +9,6 @@ import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import Team from "./pages/Team";
 import Testimonials from "./pages/Testimonials";
-import Blog from "./pages/Blog";
 import LoadingScreen from "./components/ui/LoadingScreen";
 
 export default function App() {
@@ -29,7 +28,6 @@ export default function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/team" element={<Team />} />
             <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/blog" element={<Blog />} />
           </Route>
         </Routes>
       </AnimatePresence>
