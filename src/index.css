@@ -122,3 +122,21 @@ h3,
   animation-delay: 0.9s;
   opacity: 0;
 }
+
+/* Holographic Card Styles */
+.holo-card {
+  --x: 50%;
+  --y: 50%;
+  --rot-x: 0deg;
+  --rot-y: 0deg;
+  --active: 0;
+}
+
+.holo-surface {
+  transition: transform 0.8s ease;
+  box-shadow: none;
+}
+
+.holo-card:hover .holo-surface {
+  box-shadow: none;
+}

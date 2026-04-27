@@ -37,22 +37,14 @@ export default function HeroSection() {
           variants={containerVariants}
           className="max-w-xl -ml-[40px]"
         >
-          {/* Premium Badge */}
-          <motion.span
-            variants={itemVariants}
-            className="inline-block px-5 py-2.5 bg-black/50 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-12 border border-white/30"
-          >
-            🍽️ Premium Food Portfolio
-          </motion.span>
-
           {/* Spacer */}
-          <div className="h-20 md:h-32 lg:h-40" />
+          <div className="h-40 md:h-48 lg:h-56" />
 
           {/* Paragraph and Buttons */}
           <div>
             <motion.p
               variants={itemVariants}
-              className="text-lg md:text-xl text-white mb-4 max-w-lg leading-relaxed drop-shadow-lg"
+              className="text-lg md:text-xl text-white my-4 max-w-lg leading-relaxed drop-shadow-lg"
             >
               Authentic flavors, premium ingredients, and exceptional service in
               the heart of Muzaffarabad, Azad Kashmir.
@@ -108,7 +100,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
@@ -136,7 +128,7 @@ export default function HeroSection() {
 
       {/* Bottom wave transition */}
       <div className="absolute bottom-0 w-full z-10">
-        <svg viewBox="0 0 1440 120" fill="white">
+        <svg viewBox="0 0 1440 120" fill="#ffffff">
           <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" />
         </svg>
       </div>

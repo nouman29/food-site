@@ -3,6 +3,10 @@ import SectionTitle from "../components/ui/SectionTitle";
 import Button from "../components/ui/Button";
 import FoodCard from "../components/ui/FoodCard";
 import HeroSection from "../components/sections/HeroSection";
+import signatureCreations from "../assets/signature-creations.jpg";
+import foodCard1 from "../assets/food-card-1.jpg";
+import foodCard2 from "../assets/food-card-2.jpg";
+import foodCard3 from "../assets/food-card-3.jpg";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,30 +27,43 @@ export default function Home() {
       {/* Hero Section Component */}
       <HeroSection />
 
-      {/* Featured Portfolio Items */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+      {/* Signature Creations Section with Background Image */}
+      <section className="relative py-24 -mt-[2px] overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={signatureCreations}
+            alt="Signature Creations"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/80" />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4">
           <SectionTitle
             title="Signature Creations"
             subtitle="A glimpse into our portfolio of meticulously crafted dishes"
+            light={true}
           />
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             <FoodCard
-              image="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=400&fit=crop"
-              name="Classic Burger"
-              description="Juicy beef patty with fresh lettuce, tomatoes, and house-made sauce - a testament to quality ingredients"
+              image={foodCard1}
+              name="Vegetable Pizza"
+              description="Fresh garden vegetables on a crispy stone-baked crust with melted mozzarella"
               delay={0}
             />
             <FoodCard
-              image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&h=400&fit=crop"
-              name="Margherita Pizza"
-              description="Stone-baked perfection with fresh mozzarella, basil, and San Marzano tomatoes"
+              image={foodCard2}
+              name="Chicken Bread"
+              description="Soft bread stuffed with seasoned chicken, creamy sauce, and melted cheese"
               delay={0.2}
             />
             <FoodCard
-              image="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&h=400&fit=crop"
-              name="Loaded Fries"
-              description="Crispy golden fries topped with premium cheese and fresh jalapeños"
+              image={foodCard3}
+              name="Chicken Pizza"
+              description="Tender chicken pieces with tangy sauce, bell peppers, and premium cheese blend"
               delay={0.4}
             />
           </div>
@@ -95,7 +112,7 @@ export default function Home() {
           >
             {[
               {
-                icon: "🍔",
+                icon: "🍕",
                 title: "Premium Quality",
                 desc: "Only the finest ingredients sourced locally and globally",
               },

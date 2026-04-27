@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 
-export default function SectionTitle({ title, subtitle, center = true }) {
+export default function SectionTitle({
+  title,
+  subtitle,
+  center = true,
+  light = false,
+}) {
   return (
     <div className={`${center ? "text-center" : ""} mb-12`}>
       <motion.h2
@@ -8,7 +13,9 @@ export default function SectionTitle({ title, subtitle, center = true }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 font-display"
+        className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-display ${
+          light ? "text-white" : "text-gray-900"
+        }`}
       >
         {title}
       </motion.h2>
@@ -18,7 +25,9 @@ export default function SectionTitle({ title, subtitle, center = true }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-gray-600 max-w-2xl mx-auto text-lg"
+          className={`max-w-2xl mx-auto text-lg ${
+            light ? "text-white/70" : "text-gray-600"
+          }`}
         >
           {subtitle}
         </motion.p>

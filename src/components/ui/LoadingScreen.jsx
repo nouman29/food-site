@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import habibiLogo from "../../assets/habibi-logo.jpg";
+import { habibiLogo } from "../../assets/habibi-logo.jpg";
 
 export default function LoadingScreen() {
   const [loading, setLoading] = useState(true);
