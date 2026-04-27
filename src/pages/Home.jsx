@@ -7,6 +7,7 @@ import signatureCreations from "../assets/signature-creations.jpg";
 import foodCard1 from "../assets/food-card-1.jpg";
 import foodCard2 from "../assets/food-card-2.jpg";
 import foodCard3 from "../assets/food-card-3.jpg";
+import Carousel from "../components/sections/Carousel";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -103,57 +104,8 @@ export default function Home() {
             title="What Sets Us Apart"
             subtitle="Our commitment to excellence in every aspect"
           />
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="grid md:grid-cols-4 gap-8"
-          >
-            {[
-              {
-                icon: "🍕",
-                title: "Premium Quality",
-                desc: "Only the finest ingredients sourced locally and globally",
-              },
-              {
-                icon: "👨‍🍳",
-                title: "Expert Chefs",
-                desc: "Years of culinary mastery and creative expertise",
-              },
-              {
-                icon: "📸",
-                title: "Artistic Presentation",
-                desc: "Every dish is a visual masterpiece",
-              },
-              {
-                icon: "🌟",
-                title: "Exceptional Service",
-                desc: "Dedicated team ensuring memorable experiences",
-              },
-            ].map((item) => (
-              <motion.div
-                key={item.title}
-                variants={itemVariants}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="text-center p-8 rounded-2xl hover:bg-orange-50 transition-colors duration-300 bg-white shadow-md hover:shadow-xl"
-              >
-                <motion.span
-                  className="text-5xl mb-4 block"
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  {item.icon}
-                </motion.span>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {item.desc}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+
+          <Carousel />
         </div>
       </section>
 
