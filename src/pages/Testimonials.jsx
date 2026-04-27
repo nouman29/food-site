@@ -1,48 +1,68 @@
 import { motion } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
 
+const MaleAvatar = ({ color }) => (
+  <svg className={`w-6 h-6 ${color}`} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+  </svg>
+);
+
+const FemaleAvatar = ({ color }) => (
+  <svg className={`w-6 h-6 ${color}`} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+    <circle cx="17" cy="3" r="1.5" />
+    <path d="M17 4.5v3" stroke="currentColor" strokeWidth="1.5" fill="none" />
+  </svg>
+);
+
 const reviews = [
   {
-    name: "Ayesha Mahmood",
-    role: "Food Blogger",
-    text: "Best burgers in Lahore! The zinger burger is absolutely incredible. Juicy, crispy, and the sauce is perfection. This place never disappoints.",
-    rating: 5,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
-  },
-  {
-    name: "Hassan Rizvi",
+    name: "Ahmed Khan",
     role: "Regular Customer",
-    text: "Family dinner here was perfect. Great ambiance and even better food. The staff is incredibly friendly and attentive.",
+    text: "Best fast food in Muzaffarabad! Their zinger burger is absolutely incredible. Juicy, crispy, and the sauce is perfection. This place never disappoints.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+    gender: "male",
+    bgColor: "bg-blue-500",
   },
   {
-    name: "Zara Khan",
-    role: "Food Enthusiast",
-    text: "Their pizza is authentic and delicious. Fast delivery too! The Margherita is my absolute favorite.",
+    name: "Ayesha Bibi",
+    role: "Local Foodie",
+    text: "Family dinner here was perfect. Great ambiance and even better food. The pizza and loaded fries are our family favorites.",
+    rating: 5,
+    gender: "female",
+    bgColor: "bg-pink-500",
+  },
+  {
+    name: "Usman Ali",
+    role: "College Student",
+    text: "Their chicken bread is addictive! Affordable prices and generous portions. My go-to spot after classes with friends.",
+    rating: 5,
+    gender: "male",
+    bgColor: "bg-emerald-500",
+  },
+  {
+    name: "Fatima Zahra",
+    role: "Working Professional",
+    text: "Quick service and delicious food. The platters are perfect for office lunches. Everyone at work loves Habibi!",
     rating: 4,
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+    gender: "female",
+    bgColor: "bg-purple-500",
   },
   {
-    name: "Bilal Sheikh",
-    role: "Corporate Client",
-    text: "We use Habibi for all our office events. The catering service is exceptional. Always on time and the food is fresh.",
+    name: "Bilal Mahmood",
+    role: "Tourist from Islamabad",
+    text: "Discovered this gem during my trip to Muzaffarabad. The steaks are amazing and the view of the valley makes it even better.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100",
+    gender: "male",
+    bgColor: "bg-orange-500",
   },
   {
-    name: "Nadia Hussain",
-    role: "Local Guide",
-    text: "The ambiance is unmatched. Perfect for date nights or family gatherings. Loaded fries are a must-try!",
+    name: "Sara Rashid",
+    role: "Mother of Three",
+    text: "My kids love the kids meals! Finally a place where the whole family is happy. The staff is so welcoming and patient with children.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100",
-  },
-  {
-    name: "Omar Farooq",
-    role: "Food Critic",
-    text: "Authentic flavors, generous portions, and reasonable prices. Habibi sets the standard for fast food in Lahore.",
-    rating: 5,
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100",
+    gender: "female",
+    bgColor: "bg-rose-500",
   },
 ];
 
@@ -114,12 +134,16 @@ export default function Testimonials() {
 
             {/* Author */}
             <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-              <motion.img
-                src={review.image}
-                alt={review.name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-orange-200"
+              <motion.div
                 whileHover={{ scale: 1.2 }}
-              />
+                className={`w-12 h-12 rounded-full flex items-center justify-center text-white ${review.bgColor}`}
+              >
+                {review.gender === "male" ? (
+                  <MaleAvatar color="text-white" />
+                ) : (
+                  <FemaleAvatar color="text-white" />
+                )}
+              </motion.div>
               <div>
                 <p className="font-bold text-gray-900">{review.name}</p>
                 <p className="text-orange-600 text-sm">{review.role}</p>

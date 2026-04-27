@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
+import aboutImg from "../assets/about.jpg";
 
 const stats = [
   { number: "130+", label: "Reviews Across Locations" },
@@ -18,7 +19,7 @@ export default function About() {
     >
       <SectionTitle
         title="Our Story"
-        subtitle="Serving authentic flavors to the people of Muzaffarabad, Azad Kashmir"
+        subtitle="Serving authentic fast food to the people of Muzaffarabad, Azad Kashmir"
       />
 
       <div className="grid md:grid-cols-2 gap-16 items-center mt-12">
@@ -28,15 +29,16 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          className="flex justify-center"
         >
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="relative overflow-hidden rounded-2xl shadow-2xl"
+            className="relative overflow-hidden rounded-2xl shadow-2xl w-3/4 md:w-full max-h-[600px]"
           >
             <img
-              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=700&fit=crop"
+              src={aboutImg}
               alt="Muzaffarabad valley view with restaurant ambiance"
-              className="w-full h-full object-cover"
+              className="w-full h-[600px] object-cover"
             />
             <motion.div
               initial={{ opacity: 0 }}
@@ -71,24 +73,24 @@ export default function About() {
               Two Locations, One Passion
             </h3>
             <p className="text-gray-600 leading-relaxed">
-              Habibi Restaurant began with a simple mission: to bring
-              exceptional food to the beautiful city of Muzaffarabad, Azad
-              Kashmir. What started at our Neelum Road BBQ location quickly grew
-              into a beloved brand, leading to our second family restaurant near
-              the Western Bypass.
+              Habibi Restaurant began with a simple mission: to bring delicious
+              fast food to the beautiful city of Muzaffarabad, Azad Kashmir.
+              What started at our Neelum Road location quickly grew into a
+              beloved brand, leading to our second restaurant near the Western
+              Bypass in Sama Bandi.
             </p>
             <p className="text-gray-600 leading-relaxed">
               Today, we serve both locals and visitors exploring the scenic
-              Kashmir valley. Our Neelum Road location specializes in grilled
-              and BBQ specialties with a casual dining atmosphere, while Habibi
-              2 offers a comfortable family dining experience with an expanded
-              menu for all ages.
+              Kashmir valley. Both our locations specialize in mouth-watering
+              fast food - from crispy burgers and loaded fries to hand-tossed
+              pizzas and signature sides. Whether you're grabbing a quick bite
+              or dining with family, we have something for everyone.
             </p>
             <p className="text-gray-600 leading-relaxed">
               Every dish we serve reflects the warmth of Kashmiri hospitality
               and our commitment to using the freshest ingredients. Whether
               you're a local regular or a traveler discovering Muzaffarabad,
-              you'll find a welcoming table at Habibi.
+              you'll find a welcoming table and satisfying meal at Habibi.
             </p>
           </motion.div>
 
@@ -142,22 +144,22 @@ export default function About() {
       >
         {[
           {
-            icon: "🍖",
+            icon: "🍔",
             name: "Habibi Restaurant 1",
             location: "Neelum Road, Muzaffarabad",
-            type: "BBQ & Grill Specialists",
+            type: "Fast Food",
             description:
-              "Our original location famous for grilled specialties, kebabs, and BBQ dishes. A favorite spot for meat lovers and casual dining.",
+              "Our original location famous for mouth-watering burgers, crispy fries, hand-tossed pizzas, and signature chicken bread. A favorite spot for quick bites and casual dining in the heart of the city.",
             rating: "4.2-4.3 ★",
             reviews: "89+ reviews",
           },
           {
-            icon: "🍽️",
-            name: "Habibi 2",
+            icon: "🍟",
+            name: "Habibi Restaurant 2",
             location: "Western Bypass, Sama Bandi",
-            type: "Family Restaurant",
+            type: "Fast Food",
             description:
-              "Our family dining destination offering a diverse menu suitable for all ages. Comfortable ambiance with expanded seating.",
+              "Our second location offering the same beloved fast food menu in a comfortable setting. Perfect for family meals, group hangouts, and satisfying your cravings any time of the day.",
             rating: "4.1 ★",
             reviews: "40-55+ reviews",
           },

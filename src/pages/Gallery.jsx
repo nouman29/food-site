@@ -1,60 +1,60 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
+import foodCard1 from "../assets/food-card-1.jpg";
+import foodCard2 from "../assets/food-card-2.jpg";
+import foodCard3 from "../assets/food-card-3.jpg";
+import contact1 from "../assets/contact-1.jpg";
+import contact2 from "../assets/contact-2.jpg";
+import contact3 from "../assets/contact-3.jpg";
+import aboutImg from "../assets/about.jpg";
+import premiumQuality from "../assets/premium-quality.jpg";
+import expertChefs from "../assets/expert-chefs.jpg";
+import artisticRepresentation from "../assets/artistic-representation.jpg";
+import exceptionalService from "../assets/exceptional-service.jpg";
+import signatureCreations from "../assets/signature-creations.jpg";
 
 const galleryImages = [
+  { src: foodCard1, title: "Chicken Burger", category: "Food" },
+  { src: foodCard2, title: "Chicken Roll", category: "Food" },
+  { src: foodCard3, title: "Chicken Pizza", category: "Food" },
+  { src: contact1, title: "Restaurant View", category: "Restaurant" },
+  { src: contact2, title: "Enjoying Bazinga", category: "Restaurant" },
+  { src: contact3, title: "Cheese Pizza", category: "Food" },
+  { src: aboutImg, title: "Chocolate Shake", category: "Food" },
+  { src: premiumQuality, title: "Premium Ingredients", category: "Restaurant" },
   {
-    src: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800",
-    title: "Classic Burger",
+    src: expertChefs,
+    title: "Our Expert Chefs",
+    category: "Behind the Scenes",
   },
   {
-    src: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800",
-    title: "Margherita Pizza",
+    src: artisticRepresentation,
+    title: "Artistic Presentation",
+    category: "Restaurant",
   },
   {
-    src: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800",
-    title: "Loaded Fries",
+    src: exceptionalService,
+    title: "Exceptional Service",
+    category: "Behind the Scenes",
   },
   {
-    src: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800",
-    title: "Cheese Burger",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=800",
-    title: "Chicken Wings",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
-    title: "Our Interior",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800",
-    title: "Pepperoni Pizza",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800",
-    title: "Zinger Burger",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800",
-    title: "Double Patty",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800",
-    title: "Fresh Drinks",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1573821663912-6df455f9a45d?w=800",
-    title: "BBQ Pizza",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=800",
-    title: "Onion Rings",
+    src: signatureCreations,
+    title: "Signature Creations",
+    category: "Restaurant",
   },
 ];
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filters = ["All", "Food", "Restaurant", "Behind the Scenes"];
+
+  const filteredImages =
+    activeFilter === "All"
+      ? galleryImages
+      : galleryImages.filter((img) => img.category === activeFilter);
 
   return (
     <motion.div
@@ -76,13 +76,14 @@ export default function Gallery() {
         transition={{ delay: 0.3 }}
         className="flex justify-center gap-3 mb-12 flex-wrap"
       >
-        {["All", "Burgers", "Pizza", "Sides", "Drinks"].map((filter) => (
+        {filters.map((filter) => (
           <motion.button
             key={filter}
+            onClick={() => setActiveFilter(filter)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-              filter === "All"
+              activeFilter === filter
                 ? "bg-gradient-to-r from-yellow-500 to-orange-600 text-white shadow-lg"
                 : "bg-white text-gray-600 hover:bg-orange-50 shadow-md"
             }`}
@@ -92,7 +93,7 @@ export default function Gallery() {
         ))}
       </motion.div>
 
-      {/* Masonry Grid */}
+      {/* Gallery Grid */}
       <motion.div
         initial="hidden"
         animate="visible"
@@ -102,7 +103,7 @@ export default function Gallery() {
         }}
         className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
       >
-        {galleryImages.map((img, i) => (
+        {filteredImages.map((img, i) => (
           <motion.div
             key={i}
             variants={{
@@ -115,7 +116,7 @@ export default function Gallery() {
               i % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
             } ${i % 7 === 0 ? "lg:col-span-2" : ""}`}
           >
-            <motion.img
+            <img
               src={img.src}
               alt={img.title}
               className="w-full h-full object-cover aspect-square group-hover:scale-110 transition-transform duration-700"

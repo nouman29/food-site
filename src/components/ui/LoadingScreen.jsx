@@ -104,7 +104,7 @@ export default function LoadingScreen() {
               transition={{ delay: 0.8, duration: 0.6 }}
               className="text-gray-500 text-lg mb-8"
             >
-              Premium Food Portfolio
+              Premium Fast Food
             </motion.p>
 
             {/* Loading Bar */}
@@ -123,7 +123,7 @@ export default function LoadingScreen() {
               transition={{ delay: 1.2 }}
               className="text-gray-400 text-xs mt-4"
             >
-              Loading experience...
+              Loading...
             </motion.p>
           </div>
         </motion.div>

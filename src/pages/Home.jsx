@@ -51,14 +51,14 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             <FoodCard
               image={foodCard1}
-              name="Vegetable Pizza"
-              description="Fresh garden vegetables on a crispy stone-baked crust with melted mozzarella"
+              name="Chicken Burger"
+              description="Juicy chicken patty with fresh lettuce, tomatoes, and our secret sauce in a toasted bun"
               delay={0}
             />
             <FoodCard
               image={foodCard2}
-              name="Chicken Bread"
-              description="Soft bread stuffed with seasoned chicken, creamy sauce, and melted cheese"
+              name="Chicken Wrap"
+              description="Soft wrap stuffed with seasoned chicken, creamy sauce, and melted cheese"
               delay={0.2}
             />
             <FoodCard
@@ -98,13 +98,12 @@ export default function Home() {
       </section>
 
       {/* Portfolio Features */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-24 bg-[#f5f0e8]">
         <div className="max-w-7xl mx-auto px-4">
           <SectionTitle
             title="What Sets Us Apart"
             subtitle="Our commitment to excellence in every aspect"
           />
-
           <Carousel />
         </div>
       </section>

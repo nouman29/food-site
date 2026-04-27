@@ -1,142 +1,107 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
-import FoodCard from "../components/ui/FoodCard";
+import burgers from "../assets/burgers.jpg";
+import pizza from "../assets/pizzas.jpg";
+import steaks from "../assets/steaks.jpg";
+import sides from "../assets/sides.jpg";
+import kidsMeals from "../assets/kids-meals.jpg";
+import platters from "../assets/platters.jpg";
 
-const menuItems = [
-  {
-    category: "Signature Burgers",
-    items: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-        name: "Classic Burger",
-        description:
-          "Premium beef patty with fresh lettuce, tomato, and signature sauce crafted by our head chef",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600",
-        name: "Cheese Lover",
-        description:
-          "Double cheese, caramelized onions, and our secret blend of spices",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600",
-        name: "Crispy Chicken",
-        description:
-          "Golden crispy chicken fillet with tangy coleslaw and spicy mayo",
-      },
-    ],
-  },
-  {
-    category: "Artisan Pizzas",
-    items: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-        name: "Margherita Classic",
-        description:
-          "Fresh mozzarella, garden basil, and San Marzano tomatoes on stone-baked crust",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        name: "Pepperoni Supreme",
-        description:
-          "Loaded with premium pepperoni and a blend of Italian cheeses",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1573821663912-6df455f9a45d?w=600",
-        name: "BBQ Chicken",
-        description: "Grilled chicken, smoky BBQ sauce, and caramelized onions",
-      },
-    ],
-  },
-  {
-    category: "Sides & Starters",
-    items: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600",
-        name: "French Fries",
-        description: "Hand-cut potatoes fried to golden perfection",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=600",
-        name: "Chicken Wings",
-        description: "Crispy wings glazed with our house-made BBQ sauce",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600",
-        name: "Onion Rings",
-        description: "Thick-cut onions in crispy seasoned batter",
-      },
-    ],
-  },
+const menuCards = [
+  { title: "Pizzas", image: pizza, side: "left" },
+  { title: "Burgers", image: burgers, side: "right" },
+  { title: "Steaks", image: steaks, side: "left" },
+  { title: "Sides", image: sides, side: "right" },
+  { title: "Kids Meals", image: kidsMeals, side: "left" },
+  { title: "Platters", image: platters, side: "right" },
 ];
 
-export default function Menu() {
-  const [activeCategory, setActiveCategory] = useState("Signature Burgers");
+// 🔥 Parent container for stagger effect
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
 
+// 🎯 Card animation
+const cardVariants = {
+  hidden: (side) => ({
+    x: side === "left" ? -80 : 80,
+    opacity: 0,
+    scale: 0.95,
+  }),
+  visible: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+export default function Menu() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-4 py-24"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      className="max-w-5xl mx-auto px-4 py-24"
     >
       <SectionTitle
-        title="Our Portfolio"
-        subtitle="A curated selection of our finest culinary creations"
+        title="Our Menu"
+        subtitle="Explore our complete range of delicious offerings"
       />
 
-      {/* Category Tabs */}
+      {/* Grid */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="flex justify-center gap-4 mb-16 flex-wrap"
+        className="grid grid-cols-2 gap-6"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
       >
-        {menuItems.map((cat) => (
-          <motion.button
-            key={cat.category}
-            onClick={() => setActiveCategory(cat.category)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
-              activeCategory === cat.category
-                ? "bg-gradient-to-r from-yellow-500 to-orange-600 text-white shadow-lg"
-                : "bg-white text-gray-600 hover:bg-orange-50 shadow-md"
-            }`}
-          >
-            {cat.category}
-          </motion.button>
-        ))}
-      </motion.div>
+        {menuCards.map((item, index) => {
+          const isLastAndOdd =
+            index === menuCards.length - 1 && menuCards.length % 2 !== 0;
 
-      {/* Portfolio Items Grid */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeCategory}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -30 }}
-          transition={{ duration: 0.4 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {menuItems
-            .find((cat) => cat.category === activeCategory)
-            ?.items.map((item, i) => (
-              <FoodCard key={item.name} {...item} delay={i * 0.1} />
-            ))}
-        </motion.div>
-      </AnimatePresence>
+          return (
+            <motion.div
+              key={item.title}
+              custom={item.side}
+              variants={cardVariants}
+              className={`group cursor-pointer ${
+                isLastAndOdd ? "col-span-2 max-w-[50%] mx-auto" : ""
+              }`}
+            >
+              {/* Image with hover */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden shadow-md rounded-xl"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-auto object-cover transition-transform duration-500"
+                />
+              </motion.div>
+
+              {/* Title */}
+              <div className="py-4 text-center">
+                <h3 className="text-xl font-bold text-gray-900 font-display">
+                  {item.title}
+                </h3>
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
     </motion.div>
   );
 }

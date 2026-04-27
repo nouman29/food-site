@@ -11,7 +11,7 @@ const pageVariants = {
 
 export default function Layout() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-[#f5f0e8]">
       <Navbar />
       <motion.main
         variants={pageVariants}
