@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import SectionTitle from "../components/ui/SectionTitle";
+import ChromaGrid from "../components/ui/ChromaGrid";
 import aboutImg from "../assets/about.jpg";
+import contact2 from "../assets/contact-2.jpg";
+import contact3 from "../assets/contact-3.jpg";
 
 const stats = [
   { number: "130+", label: "Reviews Across Locations" },
@@ -8,202 +10,261 @@ const stats = [
   { number: "4.2★", label: "Average Rating" },
 ];
 
+const locationItems = [
+  {
+    image: contact2,
+    title: "Habibi Restaurant 1",
+    subtitle: "Fast Food",
+    handle: "★ 4.2-4.3 · 89+ reviews",
+    location: "Neelum Road, Muzaffarabad",
+    borderColor: "#f59e0b",
+    gradient: "linear-gradient(145deg, #f59e0b, #0d0814)",
+    url: "https://maps.google.com/?q=Neelum+Road+Muzaffarabad",
+  },
+  {
+    image: contact3,
+    title: "Habibi Restaurant 2",
+    subtitle: "Fast Food",
+    handle: "★ 4.1 · 40-55+ reviews",
+    location: "Western Bypass, Sama Bandi",
+    borderColor: "#f97316",
+    gradient: "linear-gradient(210deg, #f97316, #0d0814)",
+    url: "https://maps.google.com/?q=Western+Bypass+Sama+Bandi+Muzaffarabad",
+  },
+];
+
 export default function About() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-4 py-24 bg-gradient-to-b from-[#f3eff7] via-[#ede4f5] to-[#f3eff7]"
-    >
-      <SectionTitle
-        title="Our Story"
-        subtitle="Serving authentic fast food to the people of Muzaffarabad, Azad Kashmir"
-      />
+    <div>
+      {/* Hero Banner */}
+      <section className="relative bg-gradient-to-br from-[#0d0814] via-[#1a1025] to-[#0d0814] py-24 md:py-32 overflow-visible">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
 
-      <div className="grid md:grid-cols-2 gap-16 items-center mt-12">
-        {/* Image */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="flex justify-center"
-        >
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="relative overflow-hidden rounded-2xl shadow-2xl w-3/4 md:w-full max-h-[600px]"
-          >
-            <img
-              src={aboutImg}
-              alt="Muzaffarabad valley view with restaurant ambiance"
-              className="w-full h-[600px] object-cover"
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6"
-            >
-              <p className="text-white font-bold text-lg">
-                Nestled in the Kashmir Valley
-              </p>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        {/* Content */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="space-y-6"
-        >
-          <motion.div
+        <div className="relative max-w-7xl mx-auto px-4 text-center">
+          <motion.span
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-block px-4 py-2 bg-white/5 border border-white/10 rounded-full text-purple-300 text-sm mb-6"
+          >
+            Our Journey
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-7xl font-bold text-white font-display mb-4"
+          >
+            Our Story
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="space-y-4"
+            className="text-lg text-gray-300 max-w-2xl mx-auto"
           >
-            <h3 className="text-2xl font-bold text-gray-900 font-display">
-              Two Locations, One Passion
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              Habibi Restaurant began with a simple mission: to bring delicious
-              fast food to the beautiful city of Muzaffarabad, Azad Kashmir.
-              What started at our Neelum Road location quickly grew into a
-              beloved brand, leading to our second restaurant near the Western
-              Bypass in Sama Bandi.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              Today, we serve both locals and visitors exploring the scenic
-              Kashmir valley. Both our locations specialize in mouth-watering
-              fast food - from crispy burgers and loaded fries to hand-tossed
-              pizzas and signature sides. Whether you're grabbing a quick bite
-              or dining with family, we have something for everyone.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              Every dish we serve reflects the warmth of Kashmiri hospitality
-              and our commitment to using the freshest ingredients. Whether
-              you're a local regular or a traveler discovering Muzaffarabad,
-              you'll find a welcoming table and satisfying meal at Habibi.
-            </p>
-          </motion.div>
+            Serving authentic fast food to the people of Muzaffarabad, Azad
+            Kashmir
+          </motion.p>
+        </div>
 
-          {/* Stats */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-            }}
-            className="grid grid-cols-3 gap-6 pt-6"
-          >
-            {stats.map((stat) => (
-              <motion.div
-                key={stat.label}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                whileHover={{ scale: 1.05 }}
-                className="text-center p-4 rounded-xl bg-gradient-to-br from-yellow-50 to-orange-50"
-              >
+        {/* Stats Cards - Half in hero, half out */}
+        <div className="absolute -bottom-12 left-0 right-0 z-30">
+          <div className="max-w-7xl mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-3 gap-6"
+            >
+              {stats.map((stat, i) => (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-orange-600 font-display"
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white rounded-2xl p-6 shadow-xl text-center hover:shadow-2xl transition-shadow"
                 >
-                  {stat.number}
+                  <div className="text-4xl font-bold bg-gradient-to-r from-yellow-500 to-orange-600 text-transparent bg-clip-text font-display mb-2">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm text-gray-500 font-medium">
+                    {stat.label}
+                  </div>
                 </motion.div>
-                <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
-      {/* Location Cards */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-        }}
-        className="grid md:grid-cols-2 gap-8 mt-20"
-      >
-        {[
-          {
-            icon: "🍔",
-            name: "Habibi Restaurant 1",
-            location: "Neelum Road, Muzaffarabad",
-            type: "Fast Food",
-            description:
-              "Our original location famous for mouth-watering burgers, crispy fries, hand-tossed pizzas, and signature chicken bread. A favorite spot for quick bites and casual dining in the heart of the city.",
-            rating: "4.2-4.3 ★",
-            reviews: "89+ reviews",
-          },
-          {
-            icon: "🍟",
-            name: "Habibi Restaurant 2",
-            location: "Western Bypass, Sama Bandi",
-            type: "Fast Food",
-            description:
-              "Our second location offering the same beloved fast food menu in a comfortable setting. Perfect for family meals, group hangouts, and satisfying your cravings any time of the day.",
-            rating: "4.1 ★",
-            reviews: "40-55+ reviews",
-          },
-        ].map((location, i) => (
-          <motion.div
-            key={location.name}
-            variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            whileHover={{ y: -5 }}
-            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300"
-          >
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-3xl">
-                {location.icon}
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 font-display">
-                  {location.name}
-                </h3>
-                <p className="text-orange-600 text-sm font-medium">
-                  {location.type}
-                </p>
-                <p className="text-gray-500 text-sm mt-1">
-                  {location.location}
-                </p>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-yellow-600 font-semibold text-sm">
-                    {location.rating}
-                  </span>
-                  <span className="text-gray-400">·</span>
-                  <span className="text-gray-500 text-xs">
-                    {location.reviews}
-                  </span>
+      {/* Content Section */}
+      <section className="relative bg-[#f3eff7] pt-24 pb-20">
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Two Columns */}
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Image */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 rounded-3xl blur-xl" />
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                  <img
+                    src={aboutImg}
+                    alt="Muzaffarabad valley view"
+                    className="w-full h-[500px] object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                    <p className="text-white font-bold text-lg">
+                      Nestled in the Kashmir Valley
+                    </p>
+                  </div>
                 </div>
-                <p className="text-gray-600 text-sm mt-3 leading-relaxed">
-                  {location.description}
+              </div>
+            </motion.div>
+
+            {/* Text */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+            >
+              <div>
+                <span className="text-orange-500 text-sm font-semibold uppercase tracking-wider">
+                  Since 2015
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-display mt-2 mb-6">
+                  Two Locations,
+                  <br />
+                  One Passion
+                </h2>
+              </div>
+
+              <div className="space-y-4 text-gray-600 leading-relaxed">
+                <p>
+                  Habibi Restaurant began with a simple mission: to bring
+                  delicious fast food to the beautiful city of Muzaffarabad,
+                  Azad Kashmir. What started at our Neelum Road location quickly
+                  grew into a beloved brand, leading to our second restaurant
+                  near the Western Bypass in Sama Bandi.
+                </p>
+                <p>
+                  Today, we serve both locals and visitors exploring the scenic
+                  Kashmir valley. Both our locations specialize in
+                  mouth-watering fast food - from crispy burgers and loaded
+                  fries to hand-tossed pizzas and signature sides.
+                </p>
+                <p>
+                  Every dish we serve reflects the warmth of Kashmiri
+                  hospitality and our commitment to using the freshest
+                  ingredients. Whether you're a local regular or a traveler
+                  discovering Muzaffarabad, you'll find a welcoming table and
+                  satisfying meal at Habibi.
                 </p>
               </div>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Locations Section */}
+      <section className="py-20 bg-[#0d0814] relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-yellow-600/5 rounded-full blur-3xl" />
+
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <span className="text-purple-400 text-sm font-semibold uppercase tracking-wider">
+              Visit Us
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold text-white font-display mt-2 mb-4">
+              Our Locations
+            </h2>
+            <p className="text-gray-400 max-w-xl mx-auto">
+              Two convenient locations in Muzaffarabad, ready to serve you the
+              best fast food in town
+            </p>
+          </div>
+
+          <div style={{ height: "500px", position: "relative" }}>
+            <ChromaGrid
+              items={locationItems}
+              radius={350}
+              damping={0.4}
+              fadeOut={0.5}
+              ease="power3.out"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-gradient-to-r from-yellow-500 to-orange-600 text-center">
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-display mb-4">
+            Ready to Visit Us?
+          </h2>
+          <p className="text-white/80 text-lg mb-8">
+            Find us on Google Maps or give us a call. We're open daily from 11AM
+            to 3AM.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href="tel:+923090914960"
+              className="px-8 py-4 bg-white text-orange-600 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all inline-flex items-center gap-2"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+              Call Now
+            </a>
+            <a
+              href="https://maps.google.com/?q=Neelum+Road+Muzaffarabad"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-orange-600 transition-all inline-flex items-center gap-2"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              Open in Maps
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

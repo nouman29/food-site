@@ -54,7 +54,7 @@ const contactDetails = [
     ),
     title: "Call Us",
     lines: ["+92 309 0914960"],
-    color: "from-green-500 to-emerald-600",
+    color: "from-yellow-500 to-orange-600",
   },
   {
     icon: (
@@ -74,7 +74,7 @@ const contactDetails = [
     ),
     title: "Email Us",
     lines: ["habibirestaurantajk@gmail.com"],
-    color: "from-blue-500 to-indigo-600",
+    color: "from-yellow-500 to-orange-600",
   },
   {
     icon: (
@@ -94,7 +94,7 @@ const contactDetails = [
     ),
     title: "Opening Hours",
     lines: ["Mon - Sun", "11:00 AM - 3:00 AM"],
-    color: "from-orange-500 to-red-600",
+    color: "from-yellow-500 to-orange-600",
   },
 ];
 
@@ -182,26 +182,6 @@ export default function Contact() {
             </motion.p>
           </div>
         </div>
-
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <svg
-            className="w-8 h-8 text-white/60"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
-        </motion.div>
       </section>
 
       {/* Two Location Cards */}

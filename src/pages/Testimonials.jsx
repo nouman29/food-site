@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
+import BorderGlow from "../components/ui/BorderGlow";
 
 const MaleAvatar = ({ color }) => (
   <svg className={`w-6 h-6 ${color}`} fill="currentColor" viewBox="0 0 24 24">
@@ -23,6 +24,7 @@ const reviews = [
     rating: 5,
     gender: "male",
     bgColor: "bg-blue-500",
+    colors: ["#3b82f6", "#6366f1", "#8b5cf6"],
   },
   {
     name: "Ayesha Bibi",
@@ -31,6 +33,7 @@ const reviews = [
     rating: 5,
     gender: "female",
     bgColor: "bg-pink-500",
+    colors: ["#ec4899", "#f472b6", "#c084fc"],
   },
   {
     name: "Usman Ali",
@@ -39,6 +42,7 @@ const reviews = [
     rating: 5,
     gender: "male",
     bgColor: "bg-emerald-500",
+    colors: ["#10b981", "#34d399", "#6ee7b7"],
   },
   {
     name: "Fatima Zahra",
@@ -47,6 +51,7 @@ const reviews = [
     rating: 4,
     gender: "female",
     bgColor: "bg-purple-500",
+    colors: ["#a855f7", "#c084fc", "#e9d5ff"],
   },
   {
     name: "Bilal Mahmood",
@@ -55,6 +60,7 @@ const reviews = [
     rating: 5,
     gender: "male",
     bgColor: "bg-orange-500",
+    colors: ["#f97316", "#fb923c", "#fed7aa"],
   },
   {
     name: "Sara Rashid",
@@ -63,95 +69,91 @@ const reviews = [
     rating: 5,
     gender: "female",
     bgColor: "bg-rose-500",
+    colors: ["#f43f5e", "#fb7185", "#fecdd3"],
   },
 ];
 
 export default function Testimonials() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-4 py-24"
-    >
-      <SectionTitle
-        title="What People Say"
-        subtitle="Hear from our happy customers who keep coming back"
-      />
+    <div className="bg-[#0d0814] py-24 relative overflow-hidden">
+      {/* Subtle gradient orbs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl" />
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-        }}
-        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-      >
-        {reviews.map((review, i) => (
-          <motion.div
-            key={review.name}
-            variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            whileHover={{ y: -8, scale: 1.02 }}
-            className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
-          >
-            {/* Quote Icon */}
-            <svg
-              className="w-10 h-10 text-orange-200 mb-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5 3.871 3.871 0 01-2.748-1.179z" />
-            </svg>
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <SectionTitle
+          title="What People Say"
+          subtitle="Hear from our happy customers who keep coming back"
+          light={true}
+        />
 
-            {/* Stars */}
-            <div className="flex gap-1 mb-4">
-              {[...Array(5)].map((_, star) => (
-                <motion.span
-                  key={star}
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: star * 0.1 }}
-                  className={`text-xl ${
-                    star < review.rating ? "text-yellow-500" : "text-gray-300"
-                  }`}
-                >
-                  ★
-                </motion.span>
-              ))}
-            </div>
-
-            {/* Review Text */}
-            <p className="text-gray-600 italic mb-6 leading-relaxed">
-              "{review.text}"
-            </p>
-
-            {/* Author */}
-            <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-              <motion.div
-                whileHover={{ scale: 1.2 }}
-                className={`w-12 h-12 rounded-full flex items-center justify-center text-white ${review.bgColor}`}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          {reviews.map((review, i) => (
+            <div key={review.name}>
+              <BorderGlow
+                edgeSensitivity={30}
+                glowColor="40 80 80"
+                backgroundColor="#12081c"
+                borderRadius={16}
+                glowRadius={40}
+                glowIntensity={1}
+                coneSpread={25}
+                animated={false}
+                colors={review.colors}
               >
-                {review.gender === "male" ? (
-                  <MaleAvatar color="text-white" />
-                ) : (
-                  <FemaleAvatar color="text-white" />
-                )}
-              </motion.div>
-              <div>
-                <p className="font-bold text-gray-900">{review.name}</p>
-                <p className="text-orange-600 text-sm">{review.role}</p>
-              </div>
+                <div className="p-8">
+                  {/* Quote Icon */}
+                  <svg
+                    className="w-10 h-10 text-purple-400/20 mb-4"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5 3.871 3.871 0 01-2.748-1.179z" />
+                  </svg>
+
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, star) => (
+                      <span
+                        key={star}
+                        className={`text-xl ${
+                          star < review.rating
+                            ? "text-yellow-500"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Review Text */}
+                  <p className="text-gray-400 italic mb-6 leading-relaxed">
+                    "{review.text}"
+                  </p>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-3 pt-4 border-t border-white/5">
+                    <div
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white ${review.bgColor}`}
+                    >
+                      {review.gender === "male" ? (
+                        <MaleAvatar color="text-white" />
+                      ) : (
+                        <FemaleAvatar color="text-white" />
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-200">{review.name}</p>
+                      <p className="text-purple-400 text-sm">{review.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </BorderGlow>
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
