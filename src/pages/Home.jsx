@@ -29,7 +29,7 @@ export default function Home() {
       <HeroSection />
 
       {/* Signature Creations Section with Background Image */}
-      <section className="relative py-24 -mt-[2px] overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 -mt-[2px] overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
@@ -38,7 +38,7 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/70" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/30 via-black/50 to-black/80" />
         </div>
 
         {/* Content */}
@@ -48,7 +48,7 @@ export default function Home() {
             subtitle="A glimpse into our portfolio of meticulously crafted dishes"
             light={true}
           />
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-10 md:mt-12">
             <FoodCard
               image={foodCard1}
               name="Chicken Burger"
@@ -73,13 +73,16 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
-            className="text-center mt-12"
+            className="text-center mt-8 sm:mt-10 md:mt-12"
           >
-            <Button to="/menu">
-              <span className="flex items-center gap-2">
+            <Button
+              to="/menu"
+              className="px-3 py-1.5 xs:px-4 xs:py-2 sm:px-5 sm:py-2.5 lg:px-6 lg:py-3"
+            >
+              <span className="flex items-center gap-1 text-[10px] xs:text-xs sm:text-sm">
                 View Full Portfolio
                 <svg
-                  className="w-5 h-5"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -98,7 +101,7 @@ export default function Home() {
       </section>
 
       {/* Portfolio Features */}
-      <section className="py-24 bg-[#f5f0e8]">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#f3eff7]">
         <div className="max-w-7xl mx-auto px-4">
           <SectionTitle
             title="What Sets Us Apart"
@@ -109,7 +112,7 @@ export default function Home() {
       </section>
 
       {/* Portfolio CTA - About Us */}
-      <section className="py-24 bg-gradient-to-r from-yellow-500 to-orange-600 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-r from-yellow-500 to-orange-600 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&h=600&fit=crop"
@@ -124,15 +127,19 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="relative max-w-4xl mx-auto px-4 text-center text-white"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 font-display">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-5 md:mb-6 font-display">
             Discover Our Story
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-6 sm:mb-7 md:mb-8 max-w-2xl mx-auto">
             Learn about our journey, our passion for food, and the team behind
             these culinary creations.
           </p>
-          <Button to="/about" variant="secondary">
-            About Us
+          <Button
+            to="/about"
+            variant="secondary"
+            className="px-3 py-1.5 xs:px-4 xs:py-2 sm:px-5 sm:py-2.5 lg:px-6 lg:py-3"
+          >
+            <span className="text-[10px] xs:text-xs sm:text-sm">About Us</span>
           </Button>
         </motion.div>
       </section>

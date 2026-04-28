@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
+import Masonry from "../components/sections/Masonry";
 import foodCard1 from "../assets/food-card-1.jpg";
 import foodCard2 from "../assets/food-card-2.jpg";
 import foodCard3 from "../assets/food-card-3.jpg";
@@ -15,33 +16,89 @@ import exceptionalService from "../assets/exceptional-service.jpg";
 import signatureCreations from "../assets/signature-creations.jpg";
 
 const galleryImages = [
-  { src: foodCard1, title: "Chicken Burger", category: "Food" },
-  { src: foodCard2, title: "Chicken Roll", category: "Food" },
-  { src: foodCard3, title: "Chicken Pizza", category: "Food" },
-  { src: contact1, title: "Restaurant View", category: "Restaurant" },
-  { src: contact2, title: "Enjoying Bazinga", category: "Restaurant" },
-  { src: contact3, title: "Cheese Pizza", category: "Food" },
-  { src: aboutImg, title: "Chocolate Shake", category: "Food" },
-  { src: premiumQuality, title: "Premium Ingredients", category: "Restaurant" },
   {
-    src: expertChefs,
+    id: "1",
+    img: foodCard1,
+    title: "Chicken Burger",
+    category: "Food",
+    height: 350,
+  },
+  {
+    id: "2",
+    img: foodCard2,
+    title: "Chicken Roll",
+    category: "Food",
+    height: 280,
+  },
+  {
+    id: "3",
+    img: foodCard3,
+    title: "Chicken Pizza",
+    category: "Food",
+    height: 400,
+  },
+  {
+    id: "4",
+    img: contact1,
+    title: "Restaurant View",
+    category: "Restaurant",
+    height: 320,
+  },
+  {
+    id: "5",
+    img: contact2,
+    title: "Enjoying Bazinga",
+    category: "Restaurant",
+    height: 380,
+  },
+  {
+    id: "6",
+    img: contact3,
+    title: "Cheese Pizza",
+    category: "Food",
+    height: 300,
+  },
+  {
+    id: "7",
+    img: aboutImg,
+    title: "Chocolate Shake",
+    category: "Food",
+    height: 450,
+  },
+  {
+    id: "8",
+    img: premiumQuality,
+    title: "Premium Ingredients",
+    category: "Restaurant",
+    height: 260,
+  },
+  {
+    id: "9",
+    img: expertChefs,
     title: "Our Expert Chefs",
     category: "Behind the Scenes",
+    height: 360,
   },
   {
-    src: artisticRepresentation,
+    id: "10",
+    img: artisticRepresentation,
     title: "Artistic Presentation",
     category: "Restaurant",
+    height: 340,
   },
   {
-    src: exceptionalService,
+    id: "11",
+    img: exceptionalService,
     title: "Exceptional Service",
     category: "Behind the Scenes",
+    height: 300,
   },
   {
-    src: signatureCreations,
+    id: "12",
+    img: signatureCreations,
     title: "Signature Creations",
     category: "Restaurant",
+    height: 420,
   },
 ];
 
@@ -93,52 +150,19 @@ export default function Gallery() {
         ))}
       </motion.div>
 
-      {/* Gallery Grid */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-        }}
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-      >
-        {filteredImages.map((img, i) => (
-          <motion.div
-            key={i}
-            variants={{
-              hidden: { opacity: 0, scale: 0.8 },
-              visible: { opacity: 1, scale: 1 },
-            }}
-            whileHover={{ scale: 1.03, zIndex: 10 }}
-            onClick={() => setSelectedImage(img)}
-            className={`relative overflow-hidden rounded-2xl cursor-pointer group ${
-              i % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
-            } ${i % 7 === 0 ? "lg:col-span-2" : ""}`}
-          >
-            <img
-              src={img.src}
-              alt={img.title}
-              className="w-full h-full object-cover aspect-square group-hover:scale-110 transition-transform duration-700"
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-4"
-            >
-              <div>
-                <p className="text-white font-semibold text-sm">{img.title}</p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  className="text-yellow-400 text-xs mt-1"
-                >
-                  View Full Size ↗
-                </motion.button>
-              </div>
-            </motion.div>
-          </motion.div>
-        ))}
-      </motion.div>
+      {/* Masonry Gallery */}
+      <Masonry
+        items={filteredImages}
+        ease="power3.out"
+        duration={0.6}
+        stagger={0.05}
+        animateFrom="bottom"
+        scaleOnHover
+        hoverScale={0.95}
+        blurToFocus
+        colorShiftOnHover={false}
+        onClick={(item) => setSelectedImage(item)}
+      />
 
       {/* Lightbox */}
       <AnimatePresence>
@@ -148,30 +172,30 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4"
           >
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="relative max-w-4xl w-full"
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="relative max-w-5xl w-full"
               onClick={(e) => e.stopPropagation()}
             >
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 text-white text-3xl z-10"
+                className="absolute -top-14 right-0 text-white/70 hover:text-white text-3xl z-10"
               >
                 ✕
               </motion.button>
               <img
-                src={selectedImage.src}
+                src={selectedImage.img}
                 alt={selectedImage.title}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-2xl"
+                className="w-full h-auto max-h-[85vh] object-contain rounded-2xl"
               />
-              <p className="text-white text-center mt-4 text-lg font-display">
+              <p className="text-white text-center mt-4 text-xl font-display font-bold">
                 {selectedImage.title}
               </p>
             </motion.div>

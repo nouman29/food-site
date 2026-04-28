@@ -15,7 +15,7 @@ export default function About() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-4 py-24"
+      className="max-w-7xl mx-auto px-4 py-24 bg-gradient-to-b from-[#f3eff7] via-[#ede4f5] to-[#f3eff7]"
     >
       <SectionTitle
         title="Our Story"

@@ -9,9 +9,11 @@ import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import Testimonials from "./pages/Testimonials";
 import LoadingScreen from "./components/ui/LoadingScreen";
+import usePageTitle from "./hooks/usePageTitle";
 
 export default function App() {
   const location = useLocation();
+  usePageTitle();
 
   return (
     <>

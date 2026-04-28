@@ -307,7 +307,7 @@ export default function Contact() {
       </section>
 
       {/* Contact & Social Section */}
-      <section className="py-20 bg-[#f5f0e8]">
+      <section className="py-20 bg-[#f3eff7]">
         <div className="max-w-7xl mx-auto px-4">
           <SectionTitle
             title="Reach Out to Us"

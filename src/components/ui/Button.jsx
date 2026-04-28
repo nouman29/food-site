@@ -9,7 +9,7 @@ export default function Button({
   className = "",
 }) {
   const base =
-    "inline-flex items-center px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg";
+    "inline-flex items-center rounded-full font-semibold transition-all duration-300 shadow-lg";
 
   const variants = {
     primary:
