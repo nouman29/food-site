@@ -100,40 +100,9 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-20"
-      >
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center"
-        >
-          <span className="text-white/70 text-[7px] xs:text-[8px] sm:text-[10px] uppercase tracking-wider drop-shadow-md">
-            Scroll
-          </span>
-          <svg
-            className="w-3 h-3 sm:w-4 sm:h-4 text-white/70 drop-shadow-md mt-0.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
-        </motion.div>
-      </motion.div>
-
       {/* Bottom wave */}
       <div className="absolute bottom-0 w-full z-10">
-        <svg viewBox="0 0 1440 120" fill="#ffffff">
+        <svg viewBox="0 0 1440 120" fill="#0d0814">
           <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" />
         </svg>
       </div>

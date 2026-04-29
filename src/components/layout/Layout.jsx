@@ -18,10 +18,7 @@ export default function Layout() {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f3eff7]">
-      {/* Purple accent line at top */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 via-violet-500 to-purple-600 z-[100]" />
-
+    <div className="min-h-screen flex flex-col bg-[#0d0814]">
       <Navbar />
       <motion.main
         variants={pageVariants}
@@ -29,7 +26,7 @@ export default function Layout() {
         animate="animate"
         exit="exit"
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="flex-1 pt-1"
+        className="flex-1"
       >
         <Outlet />
       </motion.main>

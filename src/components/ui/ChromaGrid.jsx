@@ -72,12 +72,11 @@ const ChromaGrid = ({
       ref={rootRef}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
-      className={`relative w-full h-full flex flex-wrap justify-center items-center gap-6 ${className}`}
+      className={`relative w-full min-h-[350px] flex flex-wrap justify-center py-12 gap-3 items-center ${className}`}
       style={{
         "--r": `${radius}px`,
         "--x": "50%",
         "--y": "50%",
-        background: "transparent",
       }}
     >
       {data.map((c, i) => (
@@ -85,97 +84,67 @@ const ChromaGrid = ({
           key={i}
           onMouseMove={handleCardMove}
           onClick={() => handleCardClick(c.url)}
-          className="group relative flex flex-col w-[280px] sm:w-[340px] md:w-[400px] rounded-2xl overflow-hidden border-2 border-transparent transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+          className="group relative flex flex-col w-[300px] rounded-[20px] overflow-hidden border-2 border-transparent transition-colors duration-300 cursor-pointer"
           style={{
-            "--card-border": c.borderColor || "#f59e0b",
-            background:
-              c.gradient || "linear-gradient(145deg, #f59e0b, #0d0814)",
-            "--spotlight-color": "rgba(255,255,255,0.15)",
+            "--card-border": c.borderColor || "transparent",
+            background: c.gradient,
+            "--spotlight-color": "rgba(255,255,255,0.3)",
           }}
         >
-          {/* Spotlight on hover */}
           <div
             className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-20 opacity-0 group-hover:opacity-100"
             style={{
               background:
-                "radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 60%)",
+                "radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 70%)",
             }}
           />
-
-          {/* Image */}
-          <div className="relative z-10 h-48 sm:h-56 overflow-hidden">
+          <div className="relative z-10 flex-1 p-[10px] box-border">
             <img
               src={c.image}
               alt={c.title}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover rounded-[10px]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           </div>
-
-          {/* Content */}
-          <footer className="relative z-10 p-5 text-white">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-xl font-bold font-display">{c.title}</h3>
-              {c.handle && (
-                <span className="text-sm text-yellow-400">{c.handle}</span>
-              )}
-            </div>
-            <p className="text-gray-300 text-sm mb-1">{c.subtitle}</p>
+          <footer className="relative z-10 p-3 text-white font-sans grid grid-cols-[1fr_auto] gap-x-3 gap-y-1">
+            <h3 className="m-0 text-[1.05rem] font-semibold">{c.title}</h3>
+            {c.handle && (
+              <span className="text-[0.95rem] opacity-80 text-right">
+                {c.handle}
+              </span>
+            )}
+            <p className="m-0 text-[0.85rem] opacity-85">{c.subtitle}</p>
             {c.location && (
-              <p className="text-gray-400 text-xs flex items-center gap-1">
-                <svg
-                  className="w-3.5 h-3.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
+              <span className="text-[0.85rem] opacity-85 text-right">
                 {c.location}
-              </p>
+              </span>
             )}
           </footer>
         </article>
       ))}
-
-      {/* Dark overlay mask */}
       <div
         className="absolute inset-0 pointer-events-none z-30"
         style={{
-          backdropFilter: "grayscale(1) brightness(0.5)",
-          WebkitBackdropFilter: "grayscale(1) brightness(0.5)",
+          backdropFilter: "grayscale(1) brightness(0.78)",
+          WebkitBackdropFilter: "grayscale(1) brightness(0.78)",
           background: "rgba(0,0,0,0.001)",
           maskImage:
-            "radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0%,transparent 20%,rgba(0,0,0,0.15) 40%,rgba(0,0,0,0.35)60%,rgba(0,0,0,0.55)75%,rgba(0,0,0,0.75)90%,black 100%)",
+            "radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0%,transparent 15%,rgba(0,0,0,0.10) 30%,rgba(0,0,0,0.22)45%,rgba(0,0,0,0.35)60%,rgba(0,0,0,0.50)75%,rgba(0,0,0,0.68)88%,white 100%)",
           WebkitMaskImage:
-            "radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0%,transparent 20%,rgba(0,0,0,0.15) 40%,rgba(0,0,0,0.35)60%,rgba(0,0,0,0.55)75%,rgba(0,0,0,0.75)90%,black 100%)",
+            "radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0%,transparent 15%,rgba(0,0,0,0.10) 30%,rgba(0,0,0,0.22)45%,rgba(0,0,0,0.35)60%,rgba(0,0,0,0.50)75%,rgba(0,0,0,0.68)88%,white 100%)",
         }}
       />
-
-      {/* Light reveal overlay */}
       <div
         ref={fadeRef}
         className="absolute inset-0 pointer-events-none transition-opacity duration-[250ms] z-40"
         style={{
-          backdropFilter: "grayscale(1) brightness(0.5)",
-          WebkitBackdropFilter: "grayscale(1) brightness(0.5)",
+          backdropFilter: "grayscale(1) brightness(0.78)",
+          WebkitBackdropFilter: "grayscale(1) brightness(0.78)",
           background: "rgba(0,0,0,0.001)",
           maskImage:
-            "radial-gradient(circle var(--r) at var(--x) var(--y),white 0%,white 20%,rgba(255,255,255,0.85)40%,rgba(255,255,255,0.7)55%,rgba(255,255,255,0.5)70%,rgba(255,255,255,0.25)85%,transparent 100%)",
+            "radial-gradient(circle var(--r) at var(--x) var(--y),white 0%,white 15%,rgba(255,255,255,0.90)30%,rgba(255,255,255,0.78)45%,rgba(255,255,255,0.65)60%,rgba(255,255,255,0.50)75%,rgba(255,255,255,0.32)88%,transparent 100%)",
           WebkitMaskImage:
-            "radial-gradient(circle var(--r) at var(--x) var(--y),white 0%,white 20%,rgba(255,255,255,0.85)40%,rgba(255,255,255,0.7)55%,rgba(255,255,255,0.5)70%,rgba(255,255,255,0.25)85%,transparent 100%)",
+            "radial-gradient(circle var(--r) at var(--x) var(--y),white 0%,white 15%,rgba(255,255,255,0.90)30%,rgba(255,255,255,0.78)45%,rgba(255,255,255,0.65)60%,rgba(255,255,255,0.50)75%,rgba(255,255,255,0.32)88%,transparent 100%)",
           opacity: 1,
         }}
       />

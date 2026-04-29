@@ -3,11 +3,23 @@ import SectionTitle from "../components/ui/SectionTitle";
 import Button from "../components/ui/Button";
 import FoodCard from "../components/ui/FoodCard";
 import HeroSection from "../components/sections/HeroSection";
+import CircularGallery from "../components/sections/CircularGallery";
 import signatureCreations from "../assets/signature-creations.jpg";
+import setsUsApart from "../assets/sets-us-apart.jpg";
 import foodCard1 from "../assets/food-card-1.jpg";
 import foodCard2 from "../assets/food-card-2.jpg";
 import foodCard3 from "../assets/food-card-3.jpg";
-import Carousel from "../components/sections/Carousel";
+import premiumQuality from "../assets/premium-quality.jpg";
+import expertChefs from "../assets/expert-chefs.jpg";
+import artisticRepresentation from "../assets/artistic-representation.jpg";
+import exceptionalService from "../assets/exceptional-service.jpg";
+
+const galleryItems = [
+  { image: premiumQuality, text: "Premium Quality" },
+  { image: expertChefs, text: "Expert Chefs" },
+  { image: artisticRepresentation, text: "Artistic Presentation" },
+  { image: exceptionalService, text: "Exceptional Service" },
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -30,7 +42,6 @@ export default function Home() {
 
       {/* Signature Creations Section with Background Image */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 -mt-[2px] overflow-hidden">
-        {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
             src={signatureCreations}
@@ -41,7 +52,6 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-purple-900/30 via-black/50 to-black/80" />
         </div>
 
-        {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <SectionTitle
             title="Signature Creations"
@@ -100,14 +110,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio Features */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#f3eff7]">
-        <div className="max-w-7xl mx-auto px-4">
+      {/* What Sets Us Apart - Fixed background + Circular Gallery */}
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+        {/* Fixed background image */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url(${setsUsApart})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
+          }}
+        />
+        <div className="absolute inset-0 bg-black/80 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/95 z-10" />
+
+        <div className="relative z-20 max-w-7xl mx-auto px-4">
           <SectionTitle
             title="What Sets Us Apart"
             subtitle="Our commitment to excellence in every aspect"
+            light={true}
           />
-          <Carousel />
+          <div style={{ height: "600px", position: "relative" }}>
+            <div style={{ height: "650px", position: "relative" }}>
+              <CircularGallery
+                items={galleryItems}
+                bend={1}
+                textColor="#ffffff"
+                borderRadius={0.05}
+                scrollSpeed={2}
+                scrollEase={0.05}
+              />
+            </div>
+          </div>
         </div>
       </section>
 

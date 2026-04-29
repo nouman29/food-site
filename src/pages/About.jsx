@@ -13,22 +13,22 @@ const stats = [
 const locationItems = [
   {
     image: contact2,
-    title: "Habibi Restaurant 1",
+    title: "Habibi 1",
     subtitle: "Fast Food",
     handle: "★ 4.2-4.3 · 89+ reviews",
     location: "Neelum Road, Muzaffarabad",
-    borderColor: "#f59e0b",
-    gradient: "linear-gradient(145deg, #f59e0b, #0d0814)",
+    borderColor: "#3B82F6",
+    gradient: "linear-gradient(145deg, #3B82F6, #047481)",
     url: "https://maps.google.com/?q=Neelum+Road+Muzaffarabad",
   },
   {
     image: contact3,
-    title: "Habibi Restaurant 2",
+    title: "Habibi 2",
     subtitle: "Fast Food",
     handle: "★ 4.1 · 40-55+ reviews",
     location: "Western Bypass, Sama Bandi",
-    borderColor: "#f97316",
-    gradient: "linear-gradient(210deg, #f97316, #0d0814)",
+    borderColor: "#10B981",
+    gradient: "linear-gradient(210deg, #10B981, #047481)",
     url: "https://maps.google.com/?q=Western+Bypass+Sama+Bandi+Muzaffarabad",
   },
 ];
@@ -102,9 +102,7 @@ export default function About() {
       {/* Content Section */}
       <section className="relative bg-[#f3eff7] pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-4">
-          {/* Two Columns */}
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Image */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -128,7 +126,6 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* Text */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -175,7 +172,7 @@ export default function About() {
       </section>
 
       {/* Locations Section */}
-      <section className="py-20 bg-[#0d0814] relative overflow-hidden">
+      <section className="py-24 md:py-32 bg-[#0d0814] relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-yellow-600/5 rounded-full blur-3xl" />
 
@@ -193,7 +190,7 @@ export default function About() {
             </p>
           </div>
 
-          <div style={{ height: "500px", position: "relative" }}>
+          <div className="flex justify-center items-center min-h-[450px]">
             <ChromaGrid
               items={locationItems}
               radius={350}
@@ -216,25 +213,6 @@ export default function About() {
             to 3AM.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="tel:+923090914960"
-              className="px-8 py-4 bg-white text-orange-600 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all inline-flex items-center gap-2"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              Call Now
-            </a>
             <a
               href="https://maps.google.com/?q=Neelum+Road+Muzaffarabad"
               target="_blank"

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import SectionTitle from "../components/ui/SectionTitle";
 import Masonry from "../components/sections/Masonry";
 import foodCard1 from "../assets/food-card-1.jpg";
 import foodCard2 from "../assets/food-card-2.jpg";
@@ -114,55 +113,59 @@ export default function Gallery() {
       : galleryImages.filter((img) => img.category === activeFilter);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto px-4 py-24"
-    >
-      <SectionTitle
-        title="Our Gallery"
-        subtitle="A visual journey through our delicious creations"
-      />
-
-      {/* Filter Pills */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="flex justify-center gap-3 mb-12 flex-wrap"
-      >
-        {filters.map((filter) => (
-          <motion.button
-            key={filter}
-            onClick={() => setActiveFilter(filter)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-              activeFilter === filter
-                ? "bg-gradient-to-r from-yellow-500 to-orange-600 text-white shadow-lg"
-                : "bg-white text-gray-600 hover:bg-orange-50 shadow-md"
-            }`}
+    <div className="bg-[#0d0814] min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 py-24">
+        {/* Filter Pills & Title Row */}
+        <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
+          {/* Filter Pills */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex gap-3 flex-wrap"
           >
-            {filter}
-          </motion.button>
-        ))}
-      </motion.div>
+            {filters.map((filter) => (
+              <motion.button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeFilter === filter
+                    ? "bg-gradient-to-r from-purple-500 to-violet-600 text-white shadow-lg"
+                    : "bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10"
+                }`}
+              >
+                {filter}
+              </motion.button>
+            ))}
+          </motion.div>
 
-      {/* Masonry Gallery */}
-      <Masonry
-        items={filteredImages}
-        ease="power3.out"
-        duration={0.6}
-        stagger={0.05}
-        animateFrom="bottom"
-        scaleOnHover
-        hoverScale={0.95}
-        blurToFocus
-        colorShiftOnHover={false}
-        onClick={(item) => setSelectedImage(item)}
-      />
+          {/* Title - Right corner */}
+          <motion.h2
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5 }}
+            className="text-4xl md:text-5xl font-bold text-white font-display"
+          >
+            Our Gallery
+          </motion.h2>
+        </div>
+
+        {/* Masonry Gallery */}
+        <Masonry
+          items={filteredImages}
+          ease="power3.out"
+          duration={0.6}
+          stagger={0.05}
+          animateFrom="bottom"
+          scaleOnHover
+          hoverScale={0.95}
+          blurToFocus
+          colorShiftOnHover={false}
+          onClick={(item) => setSelectedImage(item)}
+        />
+      </div>
 
       {/* Lightbox */}
       <AnimatePresence>
@@ -202,6 +205,6 @@ export default function Gallery() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
