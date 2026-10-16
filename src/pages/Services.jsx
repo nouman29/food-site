@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
 import BorderGlow from "../components/ui/BorderGlow";
 

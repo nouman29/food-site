@@ -156,6 +156,8 @@ const BorderGlow = ({
     if (!animated) return;
     const angleStart = 110;
     const angleEnd = 465;
+    // Intentional: kick off the one-time intro sweep animation on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSweepActive(true);
     setCursorAngle(angleStart);
 

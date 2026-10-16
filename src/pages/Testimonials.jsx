@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import SectionTitle from "../components/ui/SectionTitle";
 import BorderGlow from "../components/ui/BorderGlow";
 
@@ -88,7 +87,7 @@ export default function Testimonials() {
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {reviews.map((review, i) => (
+          {reviews.map((review) => (
             <div key={review.name}>
               <BorderGlow
                 edgeSensitivity={30}
