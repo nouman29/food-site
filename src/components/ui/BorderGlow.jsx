@@ -86,6 +86,8 @@ function buildMeshGradients(colors) {
   return gradients;
 }
 
+const SWEEP_ANGLE_START = 110;
+
 const BorderGlow = ({
   children,
   className = "",
@@ -102,9 +104,12 @@ const BorderGlow = ({
 }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [cursorAngle, setCursorAngle] = useState(45);
+  // When animated, start in the intro-sweep state instead of setting it in the effect
+  const [cursorAngle, setCursorAngle] = useState(
+    animated ? SWEEP_ANGLE_START : 45,
+  );
   const [edgeProximity, setEdgeProximity] = useState(0);
-  const [sweepActive, setSweepActive] = useState(false);
+  const [sweepActive, setSweepActive] = useState(animated);
 
   const getCenterOfElement = useCallback((el) => {
     const { width, height } = el.getBoundingClientRect();
@@ -154,12 +159,8 @@ const BorderGlow = ({
 
   useEffect(() => {
     if (!animated) return;
-    const angleStart = 110;
+    const angleStart = SWEEP_ANGLE_START;
     const angleEnd = 465;
-    // Intentional: kick off the one-time intro sweep animation on mount.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSweepActive(true);
-    setCursorAngle(angleStart);
 
     animateValue({ duration: 500, onUpdate: (v) => setEdgeProximity(v / 100) });
     animateValue({

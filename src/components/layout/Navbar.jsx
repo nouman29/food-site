@@ -9,7 +9,7 @@ const mainNavItems = [
   { to: "/about", label: "About" },
   { to: "/gallery", label: "Gallery" },
   { to: "/contact", label: "Contact" },
-  { : "/reservation", label: "Reservation" },
+  { to: "/reservation", label: "Reservation" },
 
 ];
 

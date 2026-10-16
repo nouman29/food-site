@@ -1,20 +1,24 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 
-const useMedia = (queries, values, defaultValue) => {
-  const get = () =>
-    values[queries.findIndex((q) => matchMedia(q).matches)] ?? defaultValue;
+const matchMediaValue = (queries, values, defaultValue) =>
+  values[queries.findIndex((q) => matchMedia(q).matches)] ?? defaultValue;
 
-  const [value, setValue] = useState(get);
+// Pass stable (module-level) arrays, or the listeners re-subscribe every render
+const useMedia = (queries, values, defaultValue) => {
+  const [value, setValue] = useState(() =>
+    matchMediaValue(queries, values, defaultValue),
+  );
 
   useEffect(() => {
-    const handler = () => setValue(get);
+    const handler = () =>
+      setValue(matchMediaValue(queries, values, defaultValue));
     queries.forEach((q) => matchMedia(q).addEventListener("change", handler));
     return () =>
       queries.forEach((q) =>
         matchMedia(q).removeEventListener("change", handler),
       );
-  }, [queries]);
+  }, [queries, values, defaultValue]);
 
   return value;
 };
@@ -35,6 +39,14 @@ const useMeasure = () => {
 
   return [ref, size];
 };
+
+const COLUMN_QUERIES = [
+  "(min-width:1500px)",
+  "(min-width:1000px)",
+  "(min-width:600px)",
+  "(min-width:400px)",
+];
+const COLUMN_COUNTS = [5, 4, 3, 2];
 
 const preloadImages = async (urls) => {
   await Promise.all(
@@ -61,48 +73,11 @@ const Masonry = ({
   colorShiftOnHover = false,
   onClick,
 }) => {
-  const columns = useMedia(
-    [
-      "(min-width:1500px)",
-      "(min-width:1000px)",
-      "(min-width:600px)",
-      "(min-width:400px)",
-    ],
-    [5, 4, 3, 2],
-    1,
-  );
+  const columns = useMedia(COLUMN_QUERIES, COLUMN_COUNTS, 1);
 
   const [containerRef, { width }] = useMeasure();
   const [imagesReady, setImagesReady] = useState(false);
 
-  const getInitialPosition = (item) => {
-    const containerRect = containerRef.current?.getBoundingClientRect();
-    if (!containerRect) return { x: item.x, y: item.y };
-
-    let direction = animateFrom;
-    if (animateFrom === "random") {
-      const dirs = ["top", "bottom", "left", "right"];
-      direction = dirs[Math.floor(Math.random() * dirs.length)];
-    }
-
-    switch (direction) {
-      case "top":
-        return { x: item.x, y: -200 };
-      case "bottom":
-        return { x: item.x, y: window.innerHeight + 200 };
-      case "left":
-        return { x: -200, y: item.y };
-      case "right":
-        return { x: window.innerWidth + 200, y: item.y };
-      case "center":
-        return {
-          x: containerRect.width / 2 - item.w / 2,
-          y: containerRect.height / 2 - item.h / 2,
-        };
-      default:
-        return { x: item.x, y: item.y + 100 };
-    }
-  };
 
   useEffect(() => {
     preloadImages(items.map((i) => i.img)).then(() => setImagesReady(true));
@@ -130,6 +105,35 @@ const Masonry = ({
 
   useLayoutEffect(() => {
     if (!imagesReady) return;
+
+    const getInitialPosition = (item) => {
+      const containerRect = containerRef.current?.getBoundingClientRect();
+      if (!containerRect) return { x: item.x, y: item.y };
+
+      let direction = animateFrom;
+      if (animateFrom === "random") {
+        const dirs = ["top", "bottom", "left", "right"];
+        direction = dirs[Math.floor(Math.random() * dirs.length)];
+      }
+
+      switch (direction) {
+        case "top":
+          return { x: item.x, y: -200 };
+        case "bottom":
+          return { x: item.x, y: window.innerHeight + 200 };
+        case "left":
+          return { x: -200, y: item.y };
+        case "right":
+          return { x: window.innerWidth + 200, y: item.y };
+        case "center":
+          return {
+            x: containerRect.width / 2 - item.w / 2,
+            y: containerRect.height / 2 - item.h / 2,
+          };
+        default:
+          return { x: item.x, y: item.y + 100 };
+      }
+    };
 
     grid.forEach((item, index) => {
       const selector = `[data-key="${item.id}"]`;
@@ -167,7 +171,16 @@ const Masonry = ({
     });
 
     hasMounted.current = true;
-  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease]);
+  }, [
+    grid,
+    imagesReady,
+    stagger,
+    animateFrom,
+    blurToFocus,
+    duration,
+    ease,
+    containerRef,
+  ]);
 
   const handleMouseEnter = (id, element) => {
     if (scaleOnHover) {
