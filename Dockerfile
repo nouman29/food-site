@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1.7
 
 # ---------- Stage 1: install dependencies (cached until lockfile changes) ----------
-# Vite 8 needs Node >= 20.19 / 22.12, so use Node 22 LTS.
-FROM node:22-alpine AS deps
+# Vite 8 needs Node >= 20.19 / 22.12; use Node 24 LTS (matches CI).
+FROM node:24-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm \

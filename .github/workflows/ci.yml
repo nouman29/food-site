@@ -28,14 +28,14 @@ jobs:
     steps:
       # 1. Download your repo's code onto the VM
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      # 2. Install Node 22 (same version as the Dockerfile) and cache ~/.npm
+      # 2. Install Node 24 LTS (same version as the Dockerfile) and cache ~/.npm
       #    keyed on package-lock.json, so repeat runs install much faster
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       # 3. Clean, reproducible install exactly from package-lock.json
@@ -52,8 +52,85 @@ jobs:
 
       # 6. Save the built site (dist/) so you can download it from the run page
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
           retention-days: 7
+
+  # ---------- LEVEL 2: build the Docker image and smoke-test it ----------
+  docker:
+    name: Docker Build & Smoke Test
+    runs-on: ubuntu-latest
+    needs: lint-and-build       # only runs if the job above passed
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      # Buildx is Docker's modern builder; needed for layer caching below
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Build the "runtime" stage of the Dockerfile.
+      # load: true   -> put the image into the runner's local Docker so we can `docker run` it
+      # push: false  -> don't publish anywhere yet (that's Level 3)
+      # cache-*: gha -> reuse unchanged layers from previous runs via GitHub's cache
+      - name: Build image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          target: runtime
+          load: true
+          push: false
+          tags: habibi-web:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Start the container with the same hardening as docker-compose.yml
+      - name: Run container
+        run: |
+          docker run -d --name web -p 8080:8080 \
+            --read-only --tmpfs /tmp \
+            --cap-drop ALL --security-opt no-new-privileges:true \
+            habibi-web:ci
+
+      # Wait for Docker's own HEALTHCHECK (defined in the Dockerfile) to report "healthy"
+      - name: Wait for container to be healthy
+        run: |
+          for i in $(seq 1 30); do
+            status=$(docker inspect -f '{{.State.Health.Status}}' web)
+            echo "Attempt $i: $status"
+            [ "$status" = "healthy" ] && exit 0
+            sleep 2
+          done
+          echo "Container never became healthy"; exit 1
+
+      # The actual smoke tests: does the site respond like we expect?
+      - name: Smoke test
+        run: |
+          set -e
+          echo "-> /healthz returns ok"
+          curl -fsS http://localhost:8080/healthz | grep -q ok
+
+          echo "-> home page serves the React app"
+          curl -fsS http://localhost:8080/ | grep -q '<div id="root">'
+
+          echo "-> unknown routes fall back to index.html (SPA routing)"
+          curl -fsS http://localhost:8080/some/client/route | grep -q '<div id="root">'
+
+          echo "-> security header is present"
+          curl -fsSI http://localhost:8080/ | grep -qi 'x-content-type-options: nosniff'
+
+          echo "All smoke tests passed"
+
+      # If anything failed, print the container logs so you can debug from the run page
+      - name: Show container logs
+        if: failure()
+        run: docker logs web
+
+      # Always clean up, pass or fail
+      - name: Stop container
+        if: always()
+        run: docker rm -f web
