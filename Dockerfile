@@ -2,7 +2,10 @@
 
 # ---------- Stage 1: install dependencies (cached until lockfile changes) ----------
 # Vite 8 needs Node >= 20.19 / 22.12; use Node 24 LTS (matches CI).
-FROM node:24-alpine AS deps
+# $BUILDPLATFORM = the machine doing the build, so npm/vite always run natively
+# (fast) even when producing an arm64 image on an amd64 runner. The output
+# (HTML/JS/CSS) is identical for every CPU, so this is safe.
+FROM --platform=$BUILDPLATFORM node:24-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm \

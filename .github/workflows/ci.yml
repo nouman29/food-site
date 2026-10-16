@@ -191,6 +191,9 @@ jobs:
         with:
           context: .
           target: runtime
+          # Intel/AMD servers + Apple Silicon Macs / AWS Graviton.
+          # No QEMU needed: the runtime stage only COPYs files (no RUN).
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
