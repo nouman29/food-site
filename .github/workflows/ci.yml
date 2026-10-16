@@ -199,3 +199,100 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  # ---------- LEVEL 4: deploy the new image to the EC2 server ----------
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: publish
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    timeout-minutes: 10
+
+    # A GitHub "environment": groups the deploy secrets, records every deployment
+    # on the repo page, and is where you can add manual-approval rules later
+    environment:
+      name: production
+      url: http://${{ vars.EC2_HOST }}
+
+    # Never run two deploys at the same time; queue them instead of cancelling
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+
+    permissions:
+      contents: read
+      packages: read            # lets GITHUB_TOKEN pull the image on the server
+
+    env:
+      SSH: ssh -i ~/.ssh/deploy_key ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}
+
+    steps:
+      # Write the private key and the server's fingerprint from secrets.
+      # Pinning known_hosts means we refuse to talk to an impostor server.
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.EC2_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      # Deploy the exact image this commit produced (not "latest"), so every
+      # deploy is traceable and rolling back = re-running an older workflow.
+      # metadata-action's sha tag uses the short (7 char) commit hash.
+      - name: Work out image tag
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY}:sha-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      # Pull the new image and swap containers. If the new one doesn't become
+      # healthy, put the previous version back and fail the job (auto-rollback).
+      - name: Deploy
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | $SSH "docker login ghcr.io -u ${{ github.actor }} --password-stdin"
+          $SSH "IMAGE=$IMAGE bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          run() {
+            docker run -d --name habibi-web --restart unless-stopped \
+              -p 80:8080 --read-only --tmpfs /tmp \
+              --cap-drop ALL --security-opt no-new-privileges:true \
+              --memory 128m --cpus 0.5 \
+              --log-opt max-size=10m --log-opt max-file=3 \
+              "$1"
+          }
+          wait_healthy() {
+            for i in $(seq 1 30); do
+              [ "$(docker inspect -f '{{.State.Health.Status}}' habibi-web)" = healthy ] && return 0
+              sleep 2
+            done
+            return 1
+          }
+
+          docker pull "$IMAGE"
+          docker logout ghcr.io
+          PREV=$(docker inspect -f '{{.Config.Image}}' habibi-web 2>/dev/null || true)
+          echo "Current: ${PREV:-none}  ->  New: $IMAGE"
+
+          docker rm -f habibi-web >/dev/null 2>&1 || true
+          run "$IMAGE"
+
+          if wait_healthy; then
+            echo "Deployed $IMAGE"
+            docker image prune -f >/dev/null       # remove dangling layers
+          else
+            echo "::error::New container is unhealthy -- rolling back"
+            docker logs --tail 50 habibi-web || true
+            docker rm -f habibi-web
+            [ -n "$PREV" ] && run "$PREV" && wait_healthy && echo "Rolled back to $PREV"
+            exit 1
+          fi
+          REMOTE
+
+      # Final check from the outside world, through the real public IP
+      - name: Verify live site
+        run: |
+          curl -fsS --retry 5 --retry-delay 3 --retry-all-errors http://${{ vars.EC2_HOST }}/healthz
+          curl -fsS http://${{ vars.EC2_HOST }}/ | grep -q '<div id="root">'
+          echo "Live at http://${{ vars.EC2_HOST }}"
+
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
